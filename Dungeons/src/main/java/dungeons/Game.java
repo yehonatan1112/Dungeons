@@ -1,6 +1,8 @@
 package dungeons;
 
 import dungeons.factory.RoomFactory;
+import dungeons.output.ConsoleOutputHandler;
+import dungeons.output.OutputHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,31 +23,41 @@ public class Game {
     }
 
     public Game() {
-        this.player = new Player();
+        OutputHandler outputHandler = new ConsoleOutputHandler();
+        this.player = new Player(outputHandler);
         this.currentRoom = RoomFactory.createRoom();
-        this.currentRoom.generateAdjacentRooms();
     }
 
     public void startGame() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("\nIn which direction you want to go? (left, right, forwards, backwards)");
+            System.out.println("\nIn which direction do you want to go? (left, right, forwards, backwards)");
             String choice = scanner.next().toLowerCase();
             Integer numericChoice = directionMap.get(choice);
 
-            if (numericChoice != null && numericChoice >= 1 && numericChoice <= 4) {
+            boolean isChoiceValid = numericChoice != null && numericChoice >= 1 && numericChoice <= 4;
+
+            if (isChoiceValid) {
+                if (currentRoom.getAdjacentRooms().isEmpty()) {
+                    currentRoom.generateAdjacentRooms();
+                }
+
                 List<Room> adjacentRooms = currentRoom.getAdjacentRooms();
 
                 if (numericChoice - 1 < adjacentRooms.size()) {
                     currentRoom = adjacentRooms.get(numericChoice - 1);
                     System.out.println("Welcome to " + currentRoom.getClass().getSimpleName());
-                    currentRoom.generateAdjacentRooms();
                     currentRoom.enter(player);
                 } else {
                     System.out.println("Invalid direction!");
                 }
             } else {
                 System.out.println("Invalid choice!");
+            }
+
+            if (player.getHealth() <= 0) {
+                System.out.println("Game over!");
+                break;
             }
         }
     }

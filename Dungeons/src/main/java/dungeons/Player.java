@@ -2,11 +2,18 @@ package dungeons;
 
 import static dungeons.utils.Constants.*;
 
+import dungeons.output.OutputHandler;
+
 public class Player {
     private int health = MAX_HP;
     private int gold = 0;
     private boolean isPoisoned = false;
     private boolean isCursed = false;
+    private OutputHandler outputHandler;
+
+    public Player(OutputHandler outputHandler) {
+        this.outputHandler = outputHandler;
+    }
 
     public void addGold(int amount) {
         gold += amount;
@@ -33,6 +40,10 @@ public class Player {
     public void curse() {
         System.out.println("You have been cursed!");
         isCursed = true;
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     public void curePoison() {
