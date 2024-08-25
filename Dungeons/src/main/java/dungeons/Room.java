@@ -23,6 +23,7 @@ public abstract class Room {
 
     public void generateAdjacentRooms() {
         int numAdjacent = random.nextInt(MAX_ADJ_ROOMS) + 1;
+        adjacentRooms.clear();
 
         for (int i = 0; i < numAdjacent; i++) {
             Room newRoom;
