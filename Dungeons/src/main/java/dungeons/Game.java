@@ -18,6 +18,7 @@ public class Game {
         directionMap.put("right", 2);
         directionMap.put("forwards", 3);
         directionMap.put("backwards", 4);
+        directionMap.put("status", 5);
     }
 
     public Game() {
@@ -31,18 +32,24 @@ public class Game {
         while (true) {
             System.out.println("\nIn which direction you want to go? (left, right, forwards, backwards)");
             String choice = scanner.next().toLowerCase();
-            Integer numericChoice = directionMap.get(choice);
+            if(directionMap.containsKey(choice)) {
+                Integer numericChoice = directionMap.get(choice);
+                if (numericChoice >= 1 && numericChoice <= 4) {
+                    List<Room> adjacentRooms = currentRoom.getAdjacentRooms();
 
-            if (numericChoice != null && numericChoice >= 1 && numericChoice <= 4) {
-                List<Room> adjacentRooms = currentRoom.getAdjacentRooms();
-
-                if (numericChoice - 1 < adjacentRooms.size()) {
-                    currentRoom = adjacentRooms.get(numericChoice - 1);
-                    System.out.println("Welcome to " + currentRoom.getClass().getSimpleName());
-                    currentRoom.generateAdjacentRooms();
-                    currentRoom.enter(player);
+                    if (numericChoice - 1 < adjacentRooms.size()) {
+                        currentRoom = adjacentRooms.get(numericChoice - 1);
+                        System.out.println("Welcome to " + currentRoom.getClass().getSimpleName());
+                        currentRoom.generateAdjacentRooms();
+                        currentRoom.enter(player);
+                    } else {
+                        System.out.println("Invalid direction! There is no room at this direction");
+                    }
+                } else if (numericChoice == 5) {
+                    player.applyStatusEffects();
+                    player.printStatus();
                 } else {
-                    System.out.println("Invalid direction!");
+                    System.out.println("Invalid choice!");
                 }
             } else {
                 System.out.println("Invalid choice!");
