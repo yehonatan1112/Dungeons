@@ -3,12 +3,14 @@ package dungeons.rooms;
 import dungeons.Player;
 import dungeons.Room;
 
+import static dungeons.utils.Constants.*;
+
 public class TrappedRoom extends Room {
     private boolean isTrapTriggered = false;
     private int trapDamage;
 
     public TrappedRoom() {
-        this.trapDamage = random.nextInt(5) + 1;
+        this.trapDamage = random.nextInt(TRAP_MAX_DAMAGE) + 1;
     }
 
     @Override

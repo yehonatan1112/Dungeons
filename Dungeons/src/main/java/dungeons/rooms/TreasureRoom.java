@@ -2,12 +2,13 @@ package dungeons.rooms;
 
 import dungeons.Player;
 import dungeons.Room;
+import static dungeons.utils.Constants.*;
 
 public class TreasureRoom extends Room {
     private int goldAmount;
 
     public TreasureRoom() {
-        this.goldAmount = random.nextInt(46) + 5;
+        this.goldAmount = random.nextInt(MAX_OF_GOLD - 4) + MIN_OF_GOLD;
     }
 
     @Override

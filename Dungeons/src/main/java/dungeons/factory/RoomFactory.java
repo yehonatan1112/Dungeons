@@ -5,11 +5,12 @@ import dungeons.rooms.RitualRoom;
 import dungeons.rooms.TrappedRoom;
 import dungeons.rooms.TreasureRoom;
 import java.util.Random;
+import static dungeons.utils.Constants.*;
 
 public class RoomFactory {
     public static Room createRoom() {
         Random random = new Random();
-        int type = random.nextInt(3);
+        int type = random.nextInt(NUMBER_OF_DIFF_ROOMS_TYPES);
         switch (type) {
             case 0:
                 return new TreasureRoom();

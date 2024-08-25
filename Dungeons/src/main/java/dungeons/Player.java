@@ -1,8 +1,9 @@
 package dungeons;
 
+import static dungeons.utils.Constants.*;
 
 public class Player {
-    private int health = 100;
+    private int health = MAX_HP;
     private int gold = 0;
     private boolean isPoisoned = false;
     private boolean isCursed = false;
@@ -26,7 +27,7 @@ public class Player {
 
     public void heal() {
         System.out.println("You have been healed!");
-        health = Math.min(100, health + 10);
+        health = Math.min(MAX_HP, health + HEALTH_INCREASE_POINTS);
     }
 
     public void curse() {
@@ -35,11 +36,11 @@ public class Player {
     }
 
     public void curePoison() {
-        System.out.println("Poison cured!");
-        isPoisoned = false;
-    }
-
-    public void update(Room room) {
-        room.enter(this);
+        if (isPoisoned) {
+            System.out.println("Poison cured!");
+            isPoisoned = false;
+        } else {
+            System.out.println("You are not poised! no need to cure");
+        }
     }
 }
